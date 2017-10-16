@@ -1,4 +1,5 @@
-var grid,
+var tableId = 'MAP',
+    grid,
     gridSize = 10,
     gridContainer = document.getElementById("grid-container"),
     drawButton,
@@ -6,24 +7,28 @@ var grid,
     exportButton;
 
 function onTileClick(el, row, col, i) {
-    console.log("You clicked on:", row, col);
+    // the values are as follows:
+    // - 0 for walls/inert
+    // - 1 for walkable tiles
+    // - 2 for the start tile
+    // - 3 for the end tile
 
     switch (el.className) {
         case '':
             el.className = 'clicked'
-            // value is 1
+            el.setAttribute("data-tile-value", 1);
             break;
         case 'clicked':
             el.className = 'clicked-start';
-            // value is 2
+            el.setAttribute("data-tile-value", 2);
             break;
         case 'clicked-start':
             el.className = 'clicked-end';
-            // value is 3
+            el.setAttribute("data-tile-value", 3);
             break;
         default:
             el.className = '';
-            // value is 0
+            el.setAttribute("data-tile-value", 0);
             break;
     }
 }
@@ -32,12 +37,16 @@ function clickableGrid( rows, cols, callback ){
     var i=0;
     var grid = document.createElement('table');
     grid.className = 'grid';
+    grid.id = tableId;
 
     for (var r=0;r<rows;++r){
         var tr = grid.appendChild(document.createElement('tr'));
         for (var c=0;c<cols;++c){
+
             var cell = tr.appendChild(document.createElement('td'));
             cell.innerHTML = ++i;
+            cell.setAttribute("data-tile-value", 0);
+
             cell.addEventListener('click',(function(el,r,c,i){
                 return function(){
                     callback(el,r,c,i);
@@ -76,7 +85,17 @@ resetButton.onclick = function(el) {
 
 exportButton.onclick = function(el) {
     // exports a comma separated list of 0,1,2 to re-import in unity
+    var table = document.getElementById(tableId),
+        collected = [];
+
     // loop through all the cells
-    // collect values
+    for (var i = 0, row; row = table.rows[i]; i++) {
+        for (var j = 0, cell; cell = row.cells[j]; j++) {
+            // collect values
+            collected.push(cell.getAttribute("data-tile-value"));
+        }
+    }
+
     // return "0, 1, 0, 0, 0 " etc
+    alert(collected.join(", "));
 }
