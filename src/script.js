@@ -1,7 +1,9 @@
 var tableId = 'MAP',
     grid,
     gridSize = 10,
-    gridContainer = document.getElementById("grid-container"),
+    gridContainer = document.getElementById('grid-container'),
+    gridResult = document.getElementById('grid-result'),
+    gridResultText = document.getElementById('grid-result-text'),
     drawButton,
     resetButton,
     exportButton;
@@ -16,19 +18,19 @@ function onTileClick(el, row, col, i) {
     switch (el.className) {
         case '':
             el.className = 'clicked'
-            el.setAttribute("data-tile-value", 1);
+            el.setAttribute('data-tile-value', 1);
             break;
         case 'clicked':
             el.className = 'clicked-start';
-            el.setAttribute("data-tile-value", 2);
+            el.setAttribute('data-tile-value', 2);
             break;
         case 'clicked-start':
             el.className = 'clicked-end';
-            el.setAttribute("data-tile-value", 3);
+            el.setAttribute('data-tile-value', 3);
             break;
         default:
             el.className = '';
-            el.setAttribute("data-tile-value", 0);
+            el.setAttribute('data-tile-value', 0);
             break;
     }
 }
@@ -45,7 +47,7 @@ function clickableGrid( rows, cols, callback ){
 
             var cell = tr.appendChild(document.createElement('td'));
             cell.innerHTML = ++i;
-            cell.setAttribute("data-tile-value", 0);
+            cell.setAttribute('data-tile-value', 0);
 
             cell.addEventListener('click',(function(el,r,c,i){
                 return function(){
@@ -61,6 +63,8 @@ function reDraw() {
     grid = clickableGrid(gridSize, gridSize, onTileClick);
     gridContainer.innerHTML = '';
     gridContainer.appendChild(grid);
+    gridResultText.innerHTML = '';
+    gridResult.style.display = 'none';
 }
 
 // creates the grid and appends it to the body
@@ -68,13 +72,13 @@ grid = clickableGrid(gridSize, gridSize, onTileClick);
 gridContainer.appendChild(grid);
 
 // set the onclick events on the buttons
-drawButton = document.getElementById("draw");
-resetButton = document.getElementById("reset");
-exportButton = document.getElementById("export");
+drawButton = document.getElementById('draw');
+resetButton = document.getElementById('reset');
+exportButton = document.getElementById('export');
 
 drawButton.onclick = function(el) {
     // draws the grid with the requested size
-    gridSize = parseInt(document.getElementById("draw-size").value);
+    gridSize = parseInt(document.getElementById('draw-size').value);
     reDraw();
 }
 
@@ -92,10 +96,11 @@ exportButton.onclick = function(el) {
     for (var i = 0, row; row = table.rows[i]; i++) {
         for (var j = 0, cell; cell = row.cells[j]; j++) {
             // collect values
-            collected.push(cell.getAttribute("data-tile-value"));
+            collected.push(cell.getAttribute('data-tile-value'));
         }
     }
 
-    // return "0, 1, 0, 0, 0 " etc
-    alert(collected.join(", "));
+    // return '0, 1, 0, 0, 0 ' etc
+    gridResultText.innerHTML = collected.join(', ');
+    gridResult.style.display = 'block';
 }
