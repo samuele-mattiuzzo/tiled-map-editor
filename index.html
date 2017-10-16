@@ -4,14 +4,20 @@
     </head>
     <body>
         <div class="controls">
+            <h2>Tiled Map editor</h2>
+            <p>click multiple times on a tile to cycle through colors:</p>
+            <ul>
+                <li class="white">inert/wall</li>
+                <li class="yellow">walking tile</li>
+                <li class="green">start of level</li>
+                <li class="red">end of level</li>
+            </ul>
             <div class="controls-row">
-                <span>Size: <input id="draw-size" type="text" /></span>
+                <span>new size: <input id="draw-size" type="text" /></span>
+            </div>
+            <div class="controls-row">
                 <input type="submit" id="draw" value="draw">
-            </div>
-            <div class="controls-row">
                 <input type="submit" id="reset" value="reset">
-            </div>
-            <div class="controls-row">
                 <input type="submit" id="export" value="export">
             </div>
         </div>
