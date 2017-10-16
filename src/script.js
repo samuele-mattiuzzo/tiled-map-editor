@@ -1,5 +1,9 @@
-var gridSize = 10,
-    gridContainer = document.getElementById("grid-container");
+var grid,
+    gridSize = 10,
+    gridContainer = document.getElementById("grid-container"),
+    drawButton,
+    resetButton,
+    exportButton;
 
 function onTileClick(el, row, col, i) {
     console.log("You clicked on:", row, col);
@@ -7,15 +11,19 @@ function onTileClick(el, row, col, i) {
     switch (el.className) {
         case '':
             el.className = 'clicked'
+            // value is 1
             break;
         case 'clicked':
             el.className = 'clicked-start';
+            // value is 2
             break;
         case 'clicked-start':
             el.className = 'clicked-end';
+            // value is 3
             break;
         default:
             el.className = '';
+            // value is 0
             break;
     }
 }
@@ -40,30 +48,35 @@ function clickableGrid( rows, cols, callback ){
     return grid;
 }
 
+function reDraw() {
+    grid = clickableGrid(gridSize, gridSize, onTileClick);
+    gridContainer.innerHTML = '';
+    gridContainer.appendChild(grid);
+}
+
 // creates the grid and appends it to the body
-var grid = clickableGrid(gridSize, gridSize, onTileClick);
+grid = clickableGrid(gridSize, gridSize, onTileClick);
 gridContainer.appendChild(grid);
 
 // set the onclick events on the buttons
-var drawButton = document.getElementById("draw"),
-    resetButton = document.getElementById("reset"),
-    exportButton = document.getElementById("export");
+drawButton = document.getElementById("draw");
+resetButton = document.getElementById("reset");
+exportButton = document.getElementById("export");
 
 drawButton.onclick = function(el) {
     // draws the grid with the requested size
     gridSize = parseInt(document.getElementById("draw-size").value);
-    grid = clickableGrid(gridSize, gridSize, onTileClick);
-    gridContainer.innerHTML = '';
-    gridContainer.appendChild(grid);
+    reDraw();
 }
 
 resetButton.onclick = function(el) {
-    // reset the board at the current size
-    grid = clickableGrid(gridSize, gridSize, onTileClick);
-    gridContainer.innerHTML = '';
-    gridContainer.appendChild(grid);
+    // resets the board at the current size
+    reDraw();
 }
 
 exportButton.onclick = function(el) {
     // exports a comma separated list of 0,1,2 to re-import in unity
+    // loop through all the cells
+    // collect values
+    // return "0, 1, 0, 0, 0 " etc
 }
