@@ -28,6 +28,22 @@ function onTileClick(el, row, col, i) {
             el.className = 'clicked-end';
             el.setAttribute('data-tile-value', 3);
             break;
+        case 'clicked-end':
+            el.className = 'clicked-invert-start';
+            el.setAttribute('data-tile-value', 4);
+            break;
+        case 'clicked-invert-start':
+            el.className = 'clicked-invert-controls';
+            el.setAttribute('data-tile-value', 5);
+            break;
+        case 'clicked-invert-controls':
+            el.className = 'clicked-flip';
+            el.setAttribute('data-tile-value', 6);
+            break;
+        case 'clicked-flip':
+            el.className = 'clicked-extend';
+            el.setAttribute('data-tile-value', 7);
+            break;
         default:
             el.className = '';
             el.setAttribute('data-tile-value', 0);
