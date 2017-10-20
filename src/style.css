@@ -33,6 +33,10 @@ h1, h2, h3, h4 {
 .controls ul li.yellow:before { background-color: yellow; }
 .controls ul li.green:before { background-color: green; }
 .controls ul li.red:before { background-color: red; }
+.controls ul li.orange:before { background-color: orange; }
+.controls ul li.purple:before { background-color: purple; }
+.controls ul li.blue:before { background-color: blue; }
+.controls ul li.black:before { background-color: black; }
 
 .grid {
     margin:1em auto;
@@ -54,15 +58,64 @@ h1, h2, h3, h4 {
 
 .grid td.clicked-start {
     background-color:green;
+    color: white;
     font-weight: bold;
 }
 
 .grid td.clicked-end {
     background-color:red;
+    color: white;
+    font-weight: bold;
+}
+
+/* side effects */
+.grid td.clicked-invert-start {
+    background-color:orange;
+    color: white;
+    font-weight: bold;
+}
+
+.grid td.clicked-invert-controls {
+    background-color: purple;
+    color: white;
+    font-weight: bold;
+}
+
+.grid td.clicked-flip {
+    background-color: blue;
+    color: white;
+    font-weight: bold;
+}
+
+.grid td.clicked-extend {
+    background-color: black;
+    color: white;
     font-weight: bold;
 }
 
 .grid-result {
     display: none;
     text-align: center;
+}
+
+.main-container {
+    table-layout: fixed;
+    display: table;
+    max-width: 1200px;
+}
+
+.left-column {
+    vertical-align: top;
+    width: 35%;
+    display: table-cell;
+    padding: 0;
+    text-align: left;
+}
+
+.right-column {
+    vertical-align: top;
+    width: 65%;
+    display: table-cell;
+    padding: 0;
+    text-align: left;
 }
