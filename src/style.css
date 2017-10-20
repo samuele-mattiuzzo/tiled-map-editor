@@ -97,3 +97,25 @@ h1, h2, h3, h4 {
     display: none;
     text-align: center;
 }
+
+.main-container {
+    table-layout: fixed;
+    display: table;
+    max-width: 1200px;
+}
+
+.left-column {
+    vertical-align: top;
+    width: 35%;
+    display: table-cell;
+    padding: 0;
+    text-align: left;
+}
+
+.right-column {
+    vertical-align: top;
+    width: 65%;
+    display: table-cell;
+    padding: 0;
+    text-align: left;
+}

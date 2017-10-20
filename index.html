@@ -4,32 +4,42 @@
         <link rel="stylesheet" type="text/css" href="src/style.css">
     </head>
     <body>
-        <div class="controls">
-            <h2>Tiled Map editor</h2>
-            <p>click multiple times on a tile to cycle through colors:</p>
-            <ul>
-                <li class="white">inert/wall</li>
-                <li class="yellow">walking tile</li>
-                <li class="green">start of level</li>
-                <li class="red">end of level</li>
-                <li class="orange">invert start/end</li>
-                <li class="purple">invert controls</li>
-                <li class="blue">flip level 90 degrees</li>
-                <li class="black">extend field of view</li>
-            </ul>
-            <div class="controls-row">
-                <span>new size: <input id="draw-size" type="text" /></span>
+        <div class="main-container">
+            <div class="left-column">
+                <div class="controls">
+                    <h2>Tiled Map editor</h2>
+                    <p>click multiple times on a tile to cycle through colors:</p>
+                    <ul>
+                        <li class="white">inert/wall</li>
+                        <li class="yellow">walking tile</li>
+                        <li class="green">start of level</li>
+                        <li class="red">end of level</li>
+                        <li class="orange">invert start/end</li>
+                        <li class="purple">invert controls</li>
+                        <li class="blue">flip level 90 degrees</li>
+                        <li class="black">extend field of view</li>
+                    </ul>
+                    <div class="controls-row">
+                        <span>new size: <input id="draw-size" type="text" /></span>
+                    </div>
+                    <div class="controls-row">
+                        <input type="submit" id="draw" value="draw">
+                        <input type="submit" id="reset" value="reset">
+                        <input type="submit" id="export" value="export">
+                    </div>
+                    <div class="controls-row">
+                        <input type="submit" id="import" value="import">
+                        <input type="text" id="import-grid" />
+                    </div>
+                </div>
             </div>
-            <div class="controls-row">
-                <input type="submit" id="draw" value="draw">
-                <input type="submit" id="reset" value="reset">
-                <input type="submit" id="export" value="export">
+            <div class="right-column">
+                <div id="grid-container"></div>
+                <div id="grid-result" class="grid-result">
+                    <h3>Select the text below and copy it as is:</h3>
+                    <p id="grid-result-text"></p>
+                </div>
             </div>
-        </div>
-        <div id="grid-container"></div>
-        <div id="grid-result" class="grid-result">
-            <h3>Select the text below and copy it as is:</h3>
-            <p id="grid-result-text"></p>
         </div>
     </body>
     <script src="src/script.js" type="text/javascript"></script>
