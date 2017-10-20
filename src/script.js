@@ -1,5 +1,8 @@
 var tableId = 'MAP',
+    validKeyCodes = [48, 49, 50, 51, 52, 53, 54, 55],  // 0 - 7
     grid,
+    selectedTileType = 0,
+    selectedTileTypeList = document.getElementById('selected-tile-type'),
     gridSize = 10,
     gridContainer = document.getElementById('grid-container'),
     gridResult = document.getElementById('grid-result'),
@@ -10,7 +13,28 @@ var tableId = 'MAP',
     importButton;
 
 
-function onTileClick(el, row, col, i) {
+function updateSelectedTileType(keyCode) {
+    // resets the selected class
+    selectedTileTypeList.getElementsByTagName("li")[selectedTileType]
+                        .classList.remove('selected');
+
+    selectedTileType = keyCode;
+
+    selectedTileTypeList.getElementsByTagName("li")[selectedTileType]
+                        .classList.add('selected');
+}
+
+document.onkeypress = function (e) {
+    e = e || window.event;
+
+    // accepts only 0 to 7, everything else defaults to 0
+    var keyCode = validKeyCodes.indexOf(e.keyCode);
+    keyCode = (keyCode >= 0) ? keyCode : 0;
+    updateSelectedTileType(keyCode);
+}
+
+function changeTileType(tile) {
+
     // the values are as follows:
     // - 0 for walls/inert
     // - 1 for walkable tiles
@@ -21,40 +45,37 @@ function onTileClick(el, row, col, i) {
     // - 6 flips level 90 degrees
     // - 7 extends the field of view by 1
 
-    switch (el.className) {
-        case '':
-            el.className = 'clicked'
-            el.setAttribute('data-tile-value', 1);
+    switch (selectedTileType) {
+        case 1:
+            tile.className = 'clicked'
             break;
-        case 'clicked':
-            el.className = 'clicked-start';
-            el.setAttribute('data-tile-value', 2);
+        case 2:
+            tile.className = 'clicked-start';
             break;
-        case 'clicked-start':
-            el.className = 'clicked-end';
-            el.setAttribute('data-tile-value', 3);
+        case 3:
+            tile.className = 'clicked-end';
             break;
-        case 'clicked-end':
-            el.className = 'clicked-invert-start';
-            el.setAttribute('data-tile-value', 4);
+        case 4:
+            tile.className = 'clicked-invert-start';
             break;
-        case 'clicked-invert-start':
-            el.className = 'clicked-invert-controls';
-            el.setAttribute('data-tile-value', 5);
+        case 5:
+            tile.className = 'clicked-invert-controls';
             break;
-        case 'clicked-invert-controls':
-            el.className = 'clicked-flip';
-            el.setAttribute('data-tile-value', 6);
+        case 6:
+            tile.className = 'clicked-flip';
             break;
-        case 'clicked-flip':
-            el.className = 'clicked-extend';
-            el.setAttribute('data-tile-value', 7);
+        case 7:
+            tile.className = 'clicked-extend';
             break;
         default:
-            el.className = '';
-            el.setAttribute('data-tile-value', 0);
+            tile.className = '';
             break;
     }
+    tile.setAttribute('data-tile-value', selectedTileType);
+}
+
+function onTileClick(tile) {
+    changeTileType(tile);
 }
 
 function clickableGrid( rows, cols, callback ){
@@ -63,30 +84,31 @@ function clickableGrid( rows, cols, callback ){
     grid.className = 'grid';
     grid.id = tableId;
 
-    for (var r=0;r<rows;++r){
+    for (var r=0; r<rows; ++r){
         var tr = grid.appendChild(document.createElement('tr'));
-        for (var c=0;c<cols;++c){
+        for (var c=0; c<cols; ++c){
 
             var cell = tr.appendChild(document.createElement('td'));
-            cell.innerHTML = ++i;
             cell.setAttribute('data-tile-value', 0);
 
-            cell.addEventListener('click',(function(el,r,c,i){
+            cell.addEventListener('click',(function(el){
                 return function(){
-                    callback(el,r,c,i);
+                    callback(el);
                 }
-            })(cell,r,c,i),false);
+            })(cell),false);
         }
     }
     return grid;
 }
 
+// resets the entire grid at the current size
 function reDraw() {
     grid = clickableGrid(gridSize, gridSize, onTileClick);
     gridContainer.innerHTML = '';
     gridContainer.appendChild(grid);
     gridResultText.innerHTML = '';
     gridResult.style.display = 'none';
+    updateSelectedTileType(0);
 }
 
 // creates the grid and appends it to the body
@@ -139,45 +161,10 @@ importButton.onclick = function(el) {
     // loop through all the cells
     for (var i = 0, row; row = table.rows[i]; i++) {
         for (var j = 0, cell; cell = row.cells[j]; j++) {
-
-            var cellValue = parseInt(importValue[arrayIndex]);
+            selectedTileType = parseInt(importValue[arrayIndex]);
+            changeTileType(cell);
             arrayIndex += 1;
-
-            switch (cellValue) {
-                case 1:
-                    cell.className = 'clicked'
-                    cell.setAttribute('data-tile-value', 1);
-                    break;
-                case 2:
-                    cell.className = 'clicked-start';
-                    cell.setAttribute('data-tile-value', 2);
-                    break;
-                case 3:
-                    cell.className = 'clicked-end';
-                    cell.setAttribute('data-tile-value', 3);
-                    break;
-                case 4:
-                    cell.className = 'clicked-invert-start';
-                    cell.setAttribute('data-tile-value', 4);
-                    break;
-                case 5:
-                    cell.className = 'clicked-invert-controls';
-                    cell.setAttribute('data-tile-value', 5);
-                    break;
-                case 6:
-                    cell.className = 'clicked-flip';
-                    cell.setAttribute('data-tile-value', 6);
-                    break;
-                case 7:
-                    cell.className = 'clicked-extend';
-                    cell.setAttribute('data-tile-value', 7);
-                    break;
-                default:
-                    cell.className = '';
-                    cell.setAttribute('data-tile-value', 0);
-                    break;
-            }
         }
     }
-
+    updateSelectedTileType(0);
 }
