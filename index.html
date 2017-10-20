@@ -8,23 +8,25 @@
             <div class="left-column">
                 <div class="controls">
                     <h2>Tiled Map editor</h2>
-                    <p>click multiple times on a tile to cycle through colors:</p>
+                    <p>Press the corresponding number to cycle through colors:</p>
                     <ul>
-                        <li class="white">inert/wall</li>
-                        <li class="yellow">walking tile</li>
-                        <li class="green">start of level</li>
-                        <li class="red">end of level</li>
-                        <li class="orange">invert start/end</li>
-                        <li class="purple">invert controls</li>
-                        <li class="blue">flip level 90 degrees</li>
-                        <li class="black">extend field of view</li>
+                        <li class="white">0 inert/wall</li>
+                        <li class="yellow">1 walking tile</li>
+                        <li class="green">2 start of level</li>
+                        <li class="red">3 end of level</li>
+                        <li class="orange">4 invert start/end</li>
+                        <li class="purple">5 invert controls</li>
+                        <li class="blue">6 flip level 90 degrees</li>
+                        <li class="black">7 extend field of view</li>
                     </ul>
                     <div class="controls-row">
-                        <span>new size: <input id="draw-size" type="text" /></span>
+                        <input type="submit" id="draw" value="draw">
+                        <input id="draw-size" type="text" placeholder="new size"/>
                     </div>
                     <div class="controls-row">
-                        <input type="submit" id="draw" value="draw">
                         <input type="submit" id="reset" value="reset">
+                    </div>
+                    <div class="controls-row">
                         <input type="submit" id="export" value="export">
                     </div>
                     <div class="controls-row">

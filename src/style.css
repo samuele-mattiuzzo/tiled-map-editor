@@ -8,7 +8,7 @@ h1, h2, h3, h4 {
 
 .controls {
     width: 100%;
-    text-align: center;
+    text-align: left;
 }
 
 .controls ul {
@@ -20,12 +20,16 @@ h1, h2, h3, h4 {
     text-transform: lowercase;
 }
 
+.controls ul li.selected {
+    color: red;
+}
+
 .controls ul li:before {
     content: "";
     display: inline-block;
     width: 15px;
     height: 15px;
-    margin-right: 5px;
+    margin-right: 10px;
     border: 1px solid black;
 }
 
@@ -39,38 +43,40 @@ h1, h2, h3, h4 {
 .controls ul li.black:before { background-color: black; }
 
 .grid {
-    margin:1em auto;
-    border-collapse:collapse
+    margin-left: 20px;
+    border-collapse: collapse
 }
 
 .grid td {
-    cursor:pointer;
-    width:30px; height:30px;
-    border:1px solid #ccc;
-    text-align:center;
-    font-family:sans-serif; font-size:13px
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    text-align: center;
+    font-family: sans-serif;
+    font-size:13px
 }
 
 .grid td.clicked {
-    background-color:yellow;
-    font-weight:bold;
+    background-color: yellow;
+    font-weight: bold;
 }
 
 .grid td.clicked-start {
-    background-color:green;
+    background-color: green;
     color: white;
     font-weight: bold;
 }
 
 .grid td.clicked-end {
-    background-color:red;
+    background-color: red;
     color: white;
     font-weight: bold;
 }
 
 /* side effects */
 .grid td.clicked-invert-start {
-    background-color:orange;
+    background-color: orange;
     color: white;
     font-weight: bold;
 }
