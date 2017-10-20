@@ -6,7 +6,9 @@ var tableId = 'MAP',
     gridResultText = document.getElementById('grid-result-text'),
     drawButton,
     resetButton,
-    exportButton;
+    exportButton,
+    importButton;
+
 
 function onTileClick(el, row, col, i) {
     // the values are as follows:
@@ -14,6 +16,10 @@ function onTileClick(el, row, col, i) {
     // - 1 for walkable tiles
     // - 2 for the start tile
     // - 3 for the end tile
+    // - 4 inverts start and end
+    // - 5 inverts controls
+    // - 6 flips level 90 degrees
+    // - 7 extends the field of view by 1
 
     switch (el.className) {
         case '':
@@ -91,6 +97,7 @@ gridContainer.appendChild(grid);
 drawButton = document.getElementById('draw');
 resetButton = document.getElementById('reset');
 exportButton = document.getElementById('export');
+importButton = document.getElementById('import');
 
 drawButton.onclick = function(el) {
     // draws the grid with the requested size
@@ -119,4 +126,58 @@ exportButton.onclick = function(el) {
     // return '0, 1, 0, 0, 0 ' etc
     gridResultText.innerHTML = collected.join(', ');
     gridResult.style.display = 'block';
+}
+
+importButton.onclick = function(el) {
+    var importValue = document.getElementById('import-grid').value.split(", "),
+        arrayIndex = 0;
+
+    gridSize = Math.sqrt(importValue.length);
+    reDraw();
+    var table = document.getElementById(tableId);
+
+    // loop through all the cells
+    for (var i = 0, row; row = table.rows[i]; i++) {
+        for (var j = 0, cell; cell = row.cells[j]; j++) {
+
+            var cellValue = parseInt(importValue[arrayIndex]);
+            arrayIndex += 1;
+
+            switch (cellValue) {
+                case 1:
+                    cell.className = 'clicked'
+                    cell.setAttribute('data-tile-value', 1);
+                    break;
+                case 2:
+                    cell.className = 'clicked-start';
+                    cell.setAttribute('data-tile-value', 2);
+                    break;
+                case 3:
+                    cell.className = 'clicked-end';
+                    cell.setAttribute('data-tile-value', 3);
+                    break;
+                case 4:
+                    cell.className = 'clicked-invert-start';
+                    cell.setAttribute('data-tile-value', 4);
+                    break;
+                case 5:
+                    cell.className = 'clicked-invert-controls';
+                    cell.setAttribute('data-tile-value', 5);
+                    break;
+                case 6:
+                    cell.className = 'clicked-flip';
+                    cell.setAttribute('data-tile-value', 6);
+                    break;
+                case 7:
+                    cell.className = 'clicked-extend';
+                    cell.setAttribute('data-tile-value', 7);
+                    break;
+                default:
+                    cell.className = '';
+                    cell.setAttribute('data-tile-value', 0);
+                    break;
+            }
+        }
+    }
+
 }
