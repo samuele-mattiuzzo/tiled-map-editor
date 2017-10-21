@@ -1,5 +1,5 @@
 var tableId = 'MAP',
-    validKeyCodes = [48, 49, 50, 51, 52, 53, 54, 55],  // 0 - 7
+    validKeyCodes = [48, 49, 50, 51, 52, 53, 54, 55, 56],  // 0 - 8
     grid,
     selectedTileType = 0,
     selectedTileTypeList = document.getElementById('selected-tile-type'),
@@ -44,6 +44,7 @@ function changeTileType(tile) {
     // - 5 inverts controls
     // - 6 flips level 90 degrees
     // - 7 extends the field of view by 1
+    // - 8 gives a 4-moves hint
 
     switch (selectedTileType) {
         case 1:
@@ -66,6 +67,9 @@ function changeTileType(tile) {
             break;
         case 7:
             tile.className = 'clicked-extend';
+            break;
+        case 8:
+            tile.className = 'clicked-hint';
             break;
         default:
             tile.className = '';
